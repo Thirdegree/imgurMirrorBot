@@ -9,4 +9,6 @@ def upload_imgur(image_url, api_key):
 	headers = {'Authorization': 'Client-ID ' + api_key}
 	r = requests.post(url, data=payload, headers=headers)
 	j = json.loads(r.text)
+	if not j['success']:
+		return False
 	return j['data']['link']
