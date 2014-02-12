@@ -10,5 +10,3 @@ def upload_imgur(image_url, api_key):
 	r = requests.post(url, data=payload, headers=headers)
 	j = json.loads(r.text)
 	return j['data']['link']
-	
-	
