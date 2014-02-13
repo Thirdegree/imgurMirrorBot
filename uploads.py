@@ -1,6 +1,7 @@
 import requests
 import json
 import base64
+from random import randint
 
 
 def upload_imgur(image_url, api_key):
@@ -12,3 +13,10 @@ def upload_imgur(image_url, api_key):
 	if not j['success']:
 		return False
 	return j['data']['link']
+
+def upload_gfycat(image_url, _):
+	random_string = randint(11111,9999999999)
+	url = "http://upload.gfycat.com/transcode/%d?fetchUrl=%s"%(random_string, image_url)
+	r = requests.post(url)
+	j = json.loads(r.text)
+	return "http://gfycat.com/%s"%(j['gfyname'])	

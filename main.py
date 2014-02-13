@@ -1,6 +1,6 @@
 import praw
 import json
-from upload_imgur import upload_imgur
+from uploads import *
 from time import sleep, time
 import re
 from collections import deque
@@ -8,6 +8,8 @@ from collections import deque
 done = deque(maxlen=200)
 
 keys = json.loads(open("api_keys").read())
+upload = {'imgur':upload_imgur, 'gfycat':upload_gfycat}
+
 
 r = praw.Reddit("ImgurMirrorBot by /u/Thirdegree")
 
@@ -28,15 +30,17 @@ while Trying:
 def main():
 	comments = r.get_comments("Thirdegree")
 	for post in comments:
-		pattern = "(?<=\+/u/"+USERNAME+" )[\S]+"
+		pattern = "(?<=\+/u/"+USERNAME+" )([\S]+) ([\S]+)"
 		s = re.search(pattern, post.body)
 		if s and post.id not in done:
 			done.append(post.id)
-			new_url = upload_imgur(s.group(), keys['client_id'])
-			if new_url:
-				print "%s -> %s"%(s.group(), new_url)
-				post.reply(new_url)
+			where, url = s.groups()
+			if where in upload:
+				end_url = upload[where](url, keys['client_id'])
+				print "%s -> %s"%(url, end_url)
+				post.reply(end_url)
 				sleep(2)
+					
 
 running = True
 while running:
