@@ -48,8 +48,9 @@ while running:
 		print time()
 		main()
 		########################
-		running = False
+		#running = False
 		########################
+		sleep(10)
 	except KeyboardInterrupt:
 		raise
 	except praw.errors.RateLimitExceeded:

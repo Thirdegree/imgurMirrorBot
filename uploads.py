@@ -19,4 +19,6 @@ def upload_gfycat(image_url, _):
 	url = "http://upload.gfycat.com/transcode/%d?fetchUrl=%s"%(random_string, image_url)
 	r = requests.post(url)
 	j = json.loads(r.text)
+	if 'error' in j:
+		return False
 	return "http://gfycat.com/%s"%(j['gfyname'])	
