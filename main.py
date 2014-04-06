@@ -28,7 +28,7 @@ while Trying:
 		print "Invalid Username/password, please try again."
 
 def main():
-	comments = r.get_comments("Thirdegree")
+	comments = r.helpers.comment_stream(r, "all")
 	for post in comments:
 		pattern = "(?<=\+/u/"+USERNAME+" )([\S]+) ([\S]+)"
 		s = re.search(pattern, post.body)
