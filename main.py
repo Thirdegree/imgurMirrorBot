@@ -4,6 +4,7 @@ from uploads import *
 from time import sleep, time
 import re
 from collections import deque
+import obot
 
 done = deque(maxlen=200)
 
@@ -11,12 +12,10 @@ keys = json.loads(open("api_keys").read())
 upload = {'imgur':upload_imgur, 'gfycat':upload_gfycat}
 
 
-r = praw.Reddit("ImgurMirrorBot by /u/Thirdegree")
+r = obot.login()
 
 def _login():
 	USERNAME = raw_input("Username?\n> ")
-	PASSWORD = raw_input("Password?\n> ")
-	r.login(USERNAME, PASSWORD)
 	return USERNAME
 
 Trying = True
